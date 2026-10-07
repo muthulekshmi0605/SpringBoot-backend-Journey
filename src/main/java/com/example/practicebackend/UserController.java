@@ -8,26 +8,26 @@ import java.util.Optional;
 
 @RestController
 public class UserController {
-    private final UserRepository userRepository;
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private final UserService userService;
+    public UserController(UserService userService, UserRepository userRepository) {
+        this.userService = userService;
     }
 
     private List<User> users = new ArrayList<>();
     @PostMapping("/users")
     public User createUser(@RequestBody User user){
-       userRepository.save(user);
-        return user;
+       return userService.createUser(user);
+
     }
     @GetMapping("/users")
     public List<User> getUsers(){
 
-        return userRepository.findAll();
+        return userService.getAllUser();
     }
     @GetMapping("/users/{id}")
     public User getUserById(@PathVariable Long id){
 
-        return userRepository.findById(id) .orElse(null);
+        return userService.getUserById(id);
     }
     @DeleteMapping("/users/{id}")
     public void deleteUserById(@PathVariable Long id){

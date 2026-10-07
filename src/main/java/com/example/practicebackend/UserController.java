@@ -29,4 +29,19 @@ public class UserController {
 
         return userRepository.findById(id) .orElse(null);
     }
+    @DeleteMapping("/users/{id}")
+    public void deleteUserById(@PathVariable Long id){
+        userRepository.deleteById(id);
+    }
+    @PutMapping("/users/{id}")
+    public User updateUser(@PathVariable Long id,@RequestBody User updateUser){
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null) {
+            return null;
+        }
+        user.setName(updateUser.getName());
+        user.setAge(updateUser.getAge());
+        user.setEmail(updateUser.getEmail());
+        return userRepository.save(user);
+    }
 }

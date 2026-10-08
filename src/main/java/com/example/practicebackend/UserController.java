@@ -31,17 +31,12 @@ public class UserController {
     }
     @DeleteMapping("/users/{id}")
     public void deleteUserById(@PathVariable Long id){
-        userRepository.deleteById(id);
+
+        userService.deleteUserById(id);
     }
     @PutMapping("/users/{id}")
     public User updateUser(@PathVariable Long id,@RequestBody User updateUser){
-        User user = userRepository.findById(id).orElse(null);
-        if (user == null) {
-            return null;
-        }
-        user.setName(updateUser.getName());
-        user.setAge(updateUser.getAge());
-        user.setEmail(updateUser.getEmail());
-        return userRepository.save(user);
+        return userService.updateUser(id,updateUser);
+
     }
 }

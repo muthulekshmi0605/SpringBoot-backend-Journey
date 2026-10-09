@@ -9,16 +9,20 @@ import java.util.List;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final UserResponseDTO userResponseDTO;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, UserResponseDTO userResponseDTO) {
         this.userRepository = userRepository;
+        this.userResponseDTO = userResponseDTO;
     }
 
     public User createUser(User user) {
+
         return userRepository.save(user);
     }
 
     public List<User> getAllUser() {
+
         return userRepository.findAll();
     }
 
@@ -26,6 +30,7 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
     public void deleteUserById(long id) {
+
         userRepository.deleteById(id);
     }
     public User updateUser(Long id,  User updateUser){
@@ -38,5 +43,10 @@ public class UserService {
         user.setEmail(updateUser.getEmail());
        return  userRepository.save(user);
 
+    }
+    public UserResponseDTO convertToDTO(User user){
+          return new UserResponseDTO(
+                  user.getName(),user.getEmail()
+          );
     }
 }

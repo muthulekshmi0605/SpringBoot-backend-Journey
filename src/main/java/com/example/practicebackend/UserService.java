@@ -46,7 +46,7 @@ public class UserService {
     }
     public UserResponseDTO convertToDTO(User user){
           return new UserResponseDTO(
-                  user.getName(),user.getEmail()
+                  user.getName(),user.getEmail(), user.getAge()
           );
     }
 }

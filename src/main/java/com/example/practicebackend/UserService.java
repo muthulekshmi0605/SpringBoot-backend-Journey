@@ -25,6 +25,13 @@ public class UserService {
 
         return userRepository.findAll();
     }
+    public List<UserResponseDTO> getAllUsersAsDTO() {
+        List<User> users = userRepository.findAll();
+
+        return users.stream()
+                .map(this::convertToDTO)
+                .toList();
+    }
 
     public User getUserById(long id) {
         return userRepository.findById(id).orElse(null);

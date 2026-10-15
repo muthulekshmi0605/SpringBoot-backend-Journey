@@ -20,14 +20,18 @@ public class UserController {
 
     }
     @GetMapping("/users")
-    public List<User> getUsers(){
-
-        return userService.getAllUser();
+    public List<UserResponseDTO> getUsers() {
+        return userService.getAllUsersAsDTO();
     }
     @GetMapping("/users/{id}")
-    public User getUserById(@PathVariable Long id){
+    public UserResponseDTO getUserById(@PathVariable Long id) {
+        User user = userService.getUserById(id);
 
-        return userService.getUserById(id);
+        if (user == null) {
+            return null;
+        }
+
+        return userService.convertToDTO(user);
     }
     @DeleteMapping("/users/{id}")
     public void deleteUserById(@PathVariable Long id){
